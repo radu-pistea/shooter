@@ -4,8 +4,24 @@ import random
 
 enemy_count = 1
 attack_multiplier = 1
-gifts = {1: "Basic Healing", 2: "Basic Healing", 3: "Basic Healing", 4: "Superior healing", 5: "Superior healing", 6: "Basic armour", 7: "Basic armour", 8: "Superior armour"}
-gifts_values = {"Basic Healing": 25, "Superior healing": 50, "Basic armour": 25, "Superior armour": 50}
+gifts = {1: "Basic Healing", 2: "Basic Healing", 3: "Superior healing", 4: "Basic armour", 5: "Superior armour"}
+gift_equivalent = {"Basic Healing": 25, "Superior healing": 50, "Basic armour": 25, "Superior armour": 50}
+
+# Define gift method at end of round
+def gift():
+    rand_gift = random.randint(1, 10)
+    if rand_gift in gifts.keys():
+        if gifts[rand_gift] in list(gift_equivalent.keys())[:2]:
+            player.heal[gifts[rand_gift]] = gift_equivalent[gifts[rand_gift]]
+            print(f"You received a {gifts[rand_gift]} potion.")
+        elif gifts[rand_gift] in list(gift_equivalent.keys())[2:]:
+            gift = gift_equivalent[gifts[rand_gift]]
+            player.armor += gift
+            print(f"{gift} armour gained.")
+        else:
+            print("No gift equivalent for you!")
+    else:
+        print("Sorry! No gift for you! :(")
 
 # Player class with stats
 class Player:
@@ -18,6 +34,7 @@ class Player:
     max_stealth = 75
     kill_count = 0
     damage = 25
+    heal = {}
 
     def __init__(self, name):
         self.name = name
@@ -46,6 +63,16 @@ def calculate_enemy_damage(attack_dice, defender_dice):
     damage = (attack_dice - defender_dice) * Enemy.damage
     return damage
 
+def endround():
+    if player.hp <= 0:
+        print(f"You died! Kill Count: {player.kill_count}")
+    else:
+        gift()
+    if player.hp > 100:
+        player.hp = 100
+    if player.armor > 100:
+        player.armor = 100
+
 # Define ai turn
 def ai_turn():
     global attack_multiplier
@@ -70,20 +97,15 @@ def ai_turn():
             print(f"\nAttack hit: {damage} dmg")
             attack_multiplier = 1
             break
-    if player.hp <= 0:
-        print(f"You died! Kill Count: {player.kill_count}")
 
-# Define gift method at end of round
-def gift():
-    pass
 
 # Menu
 
 while True:
     print("\nMenu:")
     print("1. Start")
-    choice = int(input("Enter your choice: "))
-    if choice == 1:
+    choice = input("Enter your choice: ")
+    if choice == "1":
         player = Player(input("Enter your name: "))
         print(f"\nWelcome {player.name}! Let's begin!")
         enemy = Enemy()
@@ -112,6 +134,7 @@ while True:
                         print("\nAttack missed!")
                         attack_multiplier = 1
                         ai_turn()
+                        endround()
                         break
                     else:
                         damage = attack_multiplier * calculate_player_damage(attack_dice, defender_dice, Player.weapon_level)
@@ -122,7 +145,8 @@ while True:
                             player.kill_count += 1
                             enemy = Enemy()
                         ai_turn()
+                        endround()
                         break
+    else:
+        print("Invalid choice. Try again.")
 
-
-                # Implement attack logic
