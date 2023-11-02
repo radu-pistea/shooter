@@ -12,7 +12,7 @@ def gift():
     rand_gift = random.randint(1, 10)
     if rand_gift in gifts.keys():
         if gifts[rand_gift] in list(gift_equivalent.keys())[:2]:
-            player.heal[gifts[rand_gift]] = gift_equivalent[gifts[rand_gift]]
+            player.heal[len(player.heal)+1] = gifts[rand_gift]
             print(f"You received a {gifts[rand_gift]} potion.")
         elif gifts[rand_gift] in list(gift_equivalent.keys())[2:]:
             gift = gift_equivalent[gifts[rand_gift]]
@@ -64,12 +64,13 @@ def calculate_enemy_damage(attack_dice, defender_dice):
     return damage
 
 def endround():
+    global enemy_count
     if player.hp <= 0:
         print(f"You died! Kill Count: {player.kill_count}")
+        enemy_count = 1
+        player.heal.clear()
     else:
         gift()
-    if player.hp > 100:
-        player.hp = 100
     if player.armor > 100:
         player.armor = 100
 
@@ -147,6 +148,28 @@ while True:
                         ai_turn()
                         endround()
                         break
+            elif player_choice == "2":
+                if len(player.heal) != 0:
+                    while True:
+                        print("\n-----------------")
+                        print(f"Choose a healing potion:")
+                        print(player.heal)
+                        print("-----------------")
+                        choice = input("\nEnter your choice: ")
+                        if choice not in player.heal:
+                            print("Invalid choice. Try again.")
+                        else:
+                            player.hp += gift_equivalent[player.heal[int(choice)]]
+                            player.heal.pop(int(choice))
+                            break
+                    if player.hp > 100:
+                        player.hp = 100
+                    ai_turn()
+                    endround()
+                    break
+                else:
+                    print("Your inventory is empty!")
+                    break
     else:
         print("Invalid choice. Try again.")
 
