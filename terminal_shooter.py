@@ -128,16 +128,16 @@ def calculate_enemy_damage(attack_dice, defender_dice):
 
 # Define endround logic
 def endround():
-    global enemy_count, stealth_count
-    if player.hp <= 0:
-        clear_screen()
-        typewriter_w(f"{t.red}YOU DIED!\nKill Count: {player.kill_count}{t.end}\n")
-        enemy_count = 1
-        stealth_count = 0
-        player.heal.clear()
-        time.sleep(1)
-    else:
-        gift()
+    # global enemy_count, stealth_count
+    # if player.hp <= 0:
+    #     clear_screen()
+    #     typewriter_w(f"{t.red}YOU DIED!\nKill Count: {player.kill_count}{t.end}\n")
+    #     enemy_count = 1
+    #     stealth_count = 0
+    #     player.heal.clear()
+    #     time.sleep(1)
+    # else:
+    gift()
     if player.armor > 100:
         player.armor = 100
     input("\nPress Enter to continue...")
@@ -253,24 +253,36 @@ while True:
         time.sleep(1.5)
         enemy = Enemy()
         player.kill_count = 0
-        while player.hp > 0:
+        while True:
             clear_screen()
-            stats()
-            print("\n1. Attack")
-            print("2. Heal")
-            print("3. Hide")
-            player_choice = input("\nEnter your choice: ")
-            if player_choice == "1":
-                player_turn()
-            elif player_choice == "2":
-                heal()
-            elif player_choice == "3":
-                stealth()
-            elif player_choice.lower() == "quit":
-                break
+            if player.hp > 0:
+                stats()
+                print("\n1. Attack")
+                print("2. Heal")
+                print("3. Hide")
+                player_choice = input("\nEnter your choice: ")
+                if player_choice == "1":
+                    player_turn()
+                elif player_choice == "2":
+                    heal()
+                elif player_choice == "3":
+                    stealth()
+                elif player_choice.lower() == "quit":
+                    break
+                else:
+                    print("\nInvalid choice. Try again.")
+                    input("\nPress Enter to continue...")
             else:
-                print("\nInvalid choice. Try again.")
+
+                clear_screen()
+                typewriter_w(f"{t.red}YOU DIED!\nKill Count: {player.kill_count}{t.end}\n")
+                enemy_count = 1
+                stealth_count = 0
+                player.heal.clear()
+                time.sleep(1)
                 input("\nPress Enter to continue...")
+                break
+
     elif choice.lower() == "quit":
         break
     else:
