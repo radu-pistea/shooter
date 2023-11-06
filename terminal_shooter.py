@@ -1,9 +1,5 @@
-import sys,time,os, subprocess, random
+import sys,time, subprocess, random
 
-# imported from typewriter.py the functions:
-# typewriter() - typewriter effect
-# typewriter_w() - typewriter effect with pause for "\n"
-# clear_screen() - clear screen
 
 # Player class with stats
 class Player:
@@ -31,6 +27,8 @@ class Enemy:
         self.id = enemy_count
         enemy_count += 1
 
+    def __repr__(self):
+        return self.id
 
 class TextColors:
     red = "\u001b[0;31m"
@@ -40,6 +38,13 @@ class TextColors:
 
 
 # Global variables
+game_name = """
+██╗  ██╗██╗██╗     ██╗     ██╗    ██╗ █████╗ ██╗   ██╗███████╗
+██║ ██╔╝██║██║     ██║     ██║    ██║██╔══██╗██║   ██║██╔════╝
+█████╔╝ ██║██║     ██║     ██║ █╗ ██║███████║██║   ██║█████╗  
+██╔═██╗ ██║██║     ██║     ██║███╗██║██╔══██║╚██╗ ██╔╝██╔══╝  
+██║  ██╗██║███████╗███████╗╚███╔███╔╝██║  ██║ ╚████╔╝ ███████╗
+╚═╝  ╚═╝╚═╝╚══════╝╚══════╝ ╚══╝╚══╝ ╚═╝  ╚═╝  ╚═══╝  ╚══════╝"""
 t=TextColors
 stealth_count = 0
 enemy_count = 1
@@ -244,6 +249,7 @@ Enemy HP: {enemy.hp}/100""")
 
 while True:
     clear_screen()
+    print(game_name)
     print("\nMenu:\n")
     print("1. Start\n")
     choice = input("Enter your choice: ")
