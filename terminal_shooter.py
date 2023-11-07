@@ -251,7 +251,8 @@ while True:
     clear_screen()
     print(game_name)
     print("\nMenu:\n")
-    print("1. Start\n")
+    print("1. Start")
+    print("2. Instructions\n")
     choice = input("Enter your choice: ")
     if choice == "1":
         player = Player(input("Enter your name: "))
@@ -288,6 +289,40 @@ while True:
                 time.sleep(1)
                 input("\nPress Enter to continue...")
                 break
+
+    elif choice == "2":
+        clear_screen()
+        print("""
+        Welcome to the Text-Based Shooter Game! Here's how to play:
+
+1. Your objective is to survive as long as possible and eliminate as many enemies as you can.
+2. The game is divided into rounds, each consisting of a player's turn and an enemy's turn.
+3. During your turn, you can choose from the following actions:
+   - Attack: Roll an attack dice (1-3) to determine your attack strength.
+   - Heal: Restore your health by a fixed amount (e.g., 25).
+   - Hide: Attempt to hide from enemy attacks (initial 10% chance).
+4. After your turn, it's the enemy's turn. The enemy attacks, and the dices are rolled randomly.
+5. Attack Calculation:
+   - If your attack dice < defender dice, your attack misses.
+   - If dice rolls are equal, a bonus multiplier increases.
+   - If your attack dice > defender dice, damage is calculated as follows:
+     Damage = (attack dice - defender dice) * base attack * weapon level * bonus multiplier.
+6. Subtract enemy attack damage from your health.
+7. Check if your health drops to 0 or below. If so, the game ends.
+8. After each round, you may receive a gift: healing potions or armor.
+9. Use healing potions from the healing menu to restore health.
+10. After every 5 kills, your weapon level increases by 1.
+11. Keep track of your score, which increases with each surviving round.
+12. Game continues until your health reaches 0 or you decide to quit.
+13. If you choose to "hide":
+   - You have a starting 10% chance of not being found.
+   - After 5 successful stealths, your stealth chance increases by 5%.
+   
+Enjoy the game, and good luck!
+Have fun and challenge yourself to achieve the highest score!""")
+        input("\nPress Enter to continue...")
+
+
 
     elif choice.lower() == "quit":
         break
