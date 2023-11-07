@@ -30,6 +30,7 @@ class Enemy:
     def __repr__(self):
         return self.id
 
+# Text color class
 class TextColors:
     red = "\u001b[0;31m"
     green = "\u001b[0;32m"
@@ -59,6 +60,7 @@ gifts = {
 }
 gift_equivalent = {"Basic Healing": 25, "Superior healing": 50, "Basic armour": 25, "Superior armour": 50}
 
+# Define typewriter effect with pause for nre line
 def typewriter_w(message):
     for char in message:
         sys.stdout.write(char)
@@ -68,12 +70,14 @@ def typewriter_w(message):
         else:
             time.sleep(1)
 
+# Define typewriter effect
 def typewriter(message):
     for char in message:
         sys.stdout.write(char)
         sys.stdout.flush()
         time.sleep(0.1)
 
+# Define clear screen command
 def clear_screen():
     operating_system = sys.platform
     if operating_system == "win32":
@@ -293,10 +297,10 @@ while True:
     elif choice == "2":
         clear_screen()
         print("""
-        Welcome to the Text-Based Shooter Game! Here's how to play:
+        Welcome to the KILLWAVE! Here's how to play:
 
-1. Your objective is to survive as long as possible and eliminate as many enemies as you can.
-2. The game is divided into rounds, each consisting of a player's turn and an enemy's turn.
+1. Your objective? Survive and kill as many enemies as you can.
+2. Each round is divided into player's turn and the enemy's turn.
 3. During your turn, you can choose from the following actions:
    - Attack: Roll an attack dice (1-3) to determine your attack strength.
    - Heal: Restore your health by a fixed amount (e.g., 25).
@@ -307,14 +311,13 @@ while True:
    - If dice rolls are equal, a bonus multiplier increases.
    - If your attack dice > defender dice, damage is calculated as follows:
      Damage = (attack dice - defender dice) * base attack * weapon level * bonus multiplier.
-6. Subtract enemy attack damage from your health.
-7. Check if your health drops to 0 or below. If so, the game ends.
-8. After each round, you may receive a gift: healing potions or armor.
-9. Use healing potions from the healing menu to restore health.
-10. After every 5 kills, your weapon level increases by 1.
-11. Keep track of your score, which increases with each surviving round.
-12. Game continues until your health reaches 0 or you decide to quit.
-13. If you choose to "hide":
+8. Check if your health drops to 0 or below. If so, the game ends.
+9. After each round, you may receive a gift: healing potions or armor.
+10. Use healing potions from the healing menu to restore health.
+11. After every 5 kills, your weapon level increases by 1.
+12. Keep track of your score, which increases with each surviving round.
+13. Game continues until your health reaches 0 or you decide to quit.
+14. If you choose to "hide":
    - You have a starting 10% chance of not being found.
    - After 5 successful stealths, your stealth chance increases by 5%.
    
